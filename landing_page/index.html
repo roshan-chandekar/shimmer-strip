@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Shimmer Strip — Your Wardrobe. Your AI. Your Snail.</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --shimmer-gold: #c4956a;
+    --shimmer-gold-light: rgba(196,149,106,0.15);
+    --shimmer-gold-glow: rgba(196,149,106,0.3);
+    --shimmer-dark: #1a1410;
+    --shimmer-dark-lighter: #2a2018;
+    --shimmer-cream: #f0e6d3;
+    --shimmer-cream-soft: #faf5ed;
+    --shimmer-red: #9b1b30;
+    --shimmer-red-soft: #e86b6b;
+    --shimmer-blue: #7a9ab0;
+    --text-warm: #d4c4b0;
+    --text-muted: #8a7a6a;
+    --text-dim: #6a5a4a;
+    --text-dark: #3a2a1a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Quicksand', Georgia, serif;
+    color: var(--text-warm);
+    background: var(--shimmer-dark);
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+
+  /* === HERO === */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    background: var(--shimmer-dark);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(196,149,106,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 100%, rgba(155,27,48,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+
+  .hero-snail {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    animation: snailBounce 3s ease-in-out infinite;
+  }
+
+  @keyframes snailBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .hero h1 {
+    font-size: clamp(2.2rem, 6vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--shimmer-gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
+  }
+
+  .hero-tagline {
+    font-size: 1rem;
+    color: var(--text-dim);
+    max-width: 520px;
+    margin: 0 auto 2.5rem;
+    font-weight: 300;
+    line-height: 1.9;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 2rem;
+    background: var(--shimmer-gold-light);
+    color: var(--shimmer-gold);
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    font-family: inherit;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    border: 1px solid var(--shimmer-gold-glow);
+  }
+
+  .hero-cta:hover {
+    background: var(--shimmer-gold-glow);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(196,149,106,0.2);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    animation: fadeInUp 2s ease-in-out infinite;
+    z-index: 1;
+  }
+
+  @keyframes fadeInUp {
+    0%, 100% { opacity: 0.3; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 0.7; transform: translateX(-50%) translateY(-5px); }
+  }
+
+  /* === SECTIONS === */
+  section { padding: 5rem 2rem; max-width: 900px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--shimmer-gold);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  h2 {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    margin-bottom: 1.5rem;
+    color: var(--text-warm);
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
+  .section-text {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 650px;
+    line-height: 1.9;
+  }
+
+  /* === SCREENSHOTS === */
+  .screenshot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .screenshot-grid img {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid rgba(196,149,106,0.15);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+  }
+
+  .screenshot-grid img:hover { transform: scale(1.02); }
+
+  .screenshot-wide {
+    grid-column: 1 / -1;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* === FEATURES (light section) === */
+  .features-section {
+    background: var(--shimmer-cream-soft);
+    max-width: 100%;
+    padding: 5rem 2rem;
+  }
+
+  .features-inner { max-width: 900px; margin: 0 auto; }
+
+  .features-section .section-label { color: var(--text-dark); opacity: 0.5; }
+  .features-section h2 { color: var(--text-dark); }
+
+  .feature-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .feature-card {
+    padding: 2rem;
+    border-radius: 16px;
+    background: white;
+    border: 1px solid rgba(196,149,106,0.1);
+    transition: all 0.3s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(196,149,106,0.1);
+  }
+
+  .feature-card.coming-soon { opacity: 0.6; position: relative; }
+  .feature-card.coming-soon::after {
+    content: 'COMING SOON';
+    position: absolute; top: 12px; right: 12px;
+    font-size: 0.6rem; letter-spacing: 1px; font-weight: 700;
+    background: var(--shimmer-gold-light);
+    color: var(--shimmer-gold);
+    padding: 2px 8px; border-radius: 8px;
+  }
+
+  .feature-icon { font-size: 2rem; margin-bottom: 1rem; }
+
+  .feature-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+    font-weight: 600;
+  }
+
+  .feature-card p {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    opacity: 0.7;
+    line-height: 1.7;
+  }
+
+  /* === AI SECTION === */
+  .ai-section {
+    background: var(--shimmer-dark-lighter);
+    max-width: 100%;
+    padding: 5rem 2rem;
+  }
+
+  .ai-inner { max-width: 900px; margin: 0 auto; }
+
+  .chat-screenshots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (max-width: 600px) {
+    .chat-screenshots { grid-template-columns: 1fr 1fr; }
+  }
+
+  .chat-screenshots img {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid rgba(196,149,106,0.15);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+
+  /* === SNAIL SECTION === */
+  .snail-section { text-align: center; padding: 5rem 2rem; }
+
+  .snail-big {
+    font-size: 5rem;
+    display: inline-block;
+    animation: snailSlide 8s ease-in-out infinite;
+  }
+
+  @keyframes snailSlide {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    25% { transform: translateX(20px) rotate(2deg); }
+    75% { transform: translateX(-20px) rotate(-2deg); }
+  }
+
+  .snail-names {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .snail-name {
+    padding: 0.5rem 1.25rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    font-family: inherit;
+    border: 1px solid rgba(196,149,106,0.2);
+    background: rgba(196,149,106,0.06);
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+  }
+
+  .snail-name:hover {
+    background: var(--shimmer-gold-light);
+    color: var(--shimmer-gold);
+    border-color: var(--shimmer-gold-glow);
+    transform: scale(1.05);
+  }
+
+  /* === DIFFERENCE === */
+  .difference-section {
+    background: var(--shimmer-cream-soft);
+    max-width: 100%;
+    padding: 5rem 2rem;
+  }
+
+  .difference-inner { max-width: 900px; margin: 0 auto; }
+  .difference-section .section-label { color: var(--text-dark); opacity: 0.5; }
+  .difference-section h2 { color: var(--text-dark); }
+
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (max-width: 600px) { .comparison { grid-template-columns: 1fr; } }
+
+  .comparison-card {
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .comparison-card.others { background: #eee8df; opacity: 0.7; }
+
+  .comparison-card.shimmer {
+    background: white;
+    border-color: var(--shimmer-gold);
+    box-shadow: 0 4px 20px rgba(196,149,106,0.1);
+  }
+
+  .comparison-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+    font-weight: 600;
+  }
+
+  .comparison-card ul { list-style: none; padding: 0; }
+
+  .comparison-card li {
+    font-size: 0.9rem;
+    padding: 0.4rem 0;
+    color: var(--text-dark);
+    opacity: 0.8;
+    line-height: 1.6;
+  }
+
+  .comparison-card.others li::before { content: '- '; color: #aaa; }
+  .comparison-card.shimmer li::before { content: '~ '; color: var(--shimmer-gold); }
+
+  /* === PICKER SECTION === */
+  .picker-section { text-align: center; }
+
+  .picker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .picker-grid img {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid rgba(196,149,106,0.15);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+
+  /* === CTA === */
+  .cta-section {
+    background: var(--shimmer-dark-lighter);
+    text-align: center;
+    padding: 5rem 2rem;
+    max-width: 100%;
+  }
+
+  .cta-section .section-text { color: var(--text-dim); margin: 0 auto 2rem; }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cta-primary {
+    padding: 0.9rem 2rem;
+    background: var(--shimmer-gold-light);
+    color: var(--shimmer-gold);
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-family: inherit;
+    letter-spacing: 2px;
+    font-size: 0.95rem;
+    border: 1px solid var(--shimmer-gold-glow);
+    transition: all 0.3s ease;
+  }
+
+  .cta-primary:hover {
+    background: var(--shimmer-gold-glow);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(196,149,106,0.2);
+  }
+
+  /* === FOOTER === */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background: var(--shimmer-dark);
+    border-top: 1px solid rgba(196,149,106,0.1);
+  }
+
+  footer a { color: var(--shimmer-gold); text-decoration: none; }
+
+  .footer-snail { font-size: 1.5rem; margin-bottom: 0.75rem; }
+
+  /* === COMPARISON TABLE === */
+  .compare-section {
+    background: white;
+    max-width: 100%;
+    padding: 5rem 2rem;
+  }
+
+  .compare-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .compare-section .section-label { color: var(--text-dark); opacity: 0.5; }
+  .compare-section h2 { color: var(--text-dark); }
+  .compare-section .section-text { color: var(--text-dark); opacity: 0.7; margin-bottom: 3rem; }
+
+  .compare-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 3rem;
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .compare-table {
+    width: 100%;
+    min-width: 700px;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .compare-table thead { background: var(--shimmer-dark-lighter); color: var(--shimmer-cream); }
+
+  .compare-table th {
+    padding: 1rem 1.25rem;
+    text-align: left;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .compare-table .feature-col { width: 18%; }
+  .compare-table .shimmer-col { width: 34%; }
+  .compare-table .others-col { width: 24%; }
+  .compare-table .oss-col { width: 24%; }
+
+  .compare-table td {
+    padding: 1rem 1.25rem;
+    vertical-align: top;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    color: var(--text-dark);
+  }
+
+  .compare-table .feature-name {
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  .compare-table .shimmer-cell { background: rgba(196,149,106,0.04); }
+
+  .compare-table .shimmer-cell .check {
+    color: var(--shimmer-gold);
+    font-weight: 700;
+    margin-right: 0.25rem;
+  }
+
+  .compare-table .others-cell { opacity: 0.7; }
+  .compare-table .oss-cell { opacity: 0.5; }
+
+  .compare-table tbody tr:hover { background: rgba(196,149,106,0.03); }
+
+  .compare-callouts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .callout-card {
+    padding: 2rem;
+    border-radius: 16px;
+    background: var(--shimmer-cream-soft);
+    border: 1px solid rgba(196,149,106,0.1);
+    transition: all 0.3s ease;
+  }
+
+  .callout-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(196,149,106,0.1);
+  }
+
+  .callout-icon { font-size: 2rem; margin-bottom: 1rem; }
+
+  .callout-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-dark);
+    font-weight: 600;
+  }
+
+  .callout-card p {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    opacity: 0.7;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 768px) {
+    .compare-table-wrap {
+      margin-left: -1rem;
+      margin-right: -1rem;
+      border-radius: 0;
+    }
+    .compare-table th,
+    .compare-table td {
+      padding: 0.75rem 1rem;
+      font-size: 0.8rem;
+    }
+  }
+
+  .origin-note {
+    font-style: italic;
+    color: var(--text-muted);
+    opacity: 0.7;
+    margin-top: 0.75rem;
+    font-size: 0.75rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* === NAV LOZENGES === */
+  .nav-lozenges {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: rgba(26,20,16,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(196,149,106,0.1);
+    transform: translateY(-100%);
+    transition: transform 0.35s ease;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav-lozenges.visible { transform: translateY(0); }
+
+  .nav-lozenges::-webkit-scrollbar { display: none; }
+
+  .nav-lozenge {
+    flex-shrink: 0;
+    padding: 7px 14px;
+    border-radius: 20px;
+    background: rgba(196,149,106,0.06);
+    border: 1px solid rgba(196,149,106,0.12);
+    color: var(--text-muted);
+    font-size: 11px;
+    font-family: 'Quicksand', Georgia, serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .nav-lozenge:hover,
+  .nav-lozenge.active {
+    background: rgba(196,149,106,0.2);
+    border-color: rgba(196,149,106,0.3);
+    color: var(--shimmer-gold);
+  }
+
+  .nav-lozenge.cta-lozenge {
+    background: rgba(196,149,106,0.15);
+    border-color: rgba(196,149,106,0.25);
+    color: var(--shimmer-gold);
+    font-weight: 600;
+  }
+
+  .nav-lozenge.cta-lozenge:hover {
+    background: rgba(196,149,106,0.3);
+  }
+
+  /* === BACK TO TOP === */
+  .back-to-top {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 100;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(26,20,16,0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(196,149,106,0.2);
+    color: var(--shimmer-gold);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.35s ease;
+    pointer-events: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .back-to-top:hover {
+    background: rgba(196,149,106,0.2);
+    border-color: rgba(196,149,106,0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(196,149,106,0.2);
+  }
+
+  /* === TIP THE SNAIL === */
+  .tip-snail {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px 10px 14px;
+    border-radius: 50px;
+    background: rgba(26,20,16,0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(196,149,106,0.2);
+    color: var(--shimmer-gold);
+    text-decoration: none;
+    font-family: 'Quicksand', Georgia, serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+    pointer-events: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    overflow: visible;
+  }
+
+  .tip-snail.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .tip-snail-emoji {
+    font-size: 22px;
+    display: inline-block;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .tip-snail:hover {
+    border-color: rgba(196,149,106,0.5);
+    box-shadow: 0 0 20px rgba(196,149,106,0.25), 0 8px 30px rgba(0,0,0,0.3);
+    transform: translateY(-3px);
+    background: rgba(42,32,24,0.95);
+  }
+
+  .tip-snail:hover .tip-snail-emoji {
+    transform: rotate(360deg);
+  }
+
+  .tip-snail-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  .tip-snail-sub {
+    font-size: 9px;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+  }
+
+  /* Gold confetti burst */
+  .confetti-container {
+    position: fixed;
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  .confetti {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    animation: confettiBurst 0.9s ease-out forwards;
+  }
+
+  @keyframes confettiBurst {
+    0% { opacity: 1; transform: translate(0, 0) scale(1); }
+    100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0); }
+  }
+
+  @keyframes snailSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(720deg); }
+  }
+
+  .tip-snail-emoji.celebrating {
+    animation: snailSpin 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @media (max-width: 600px) {
+    .nav-lozenges { gap: 5px; padding: 8px 12px; }
+    .nav-lozenge { padding: 6px 11px; font-size: 10px; }
+    .back-to-top { width: 40px; height: 40px; bottom: 18px; left: 18px; font-size: 18px; }
+    .tip-snail { bottom: 18px; right: 18px; padding: 8px 14px 8px 10px; font-size: 11px; }
+    .tip-snail-emoji { font-size: 18px; }
+    .tip-snail-sub { font-size: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV LOZENGES -->
+<nav class="nav-lozenges" id="nav">
+  <a href="#about" class="nav-lozenge">About</a>
+  <a href="#features" class="nav-lozenge">Features</a>
+  <a href="#compare" class="nav-lozenge">Compare</a>
+  <a href="#ai" class="nav-lozenge">AI</a>
+  <a href="#snail" class="nav-lozenge">🐌 Snail</a>
+  <a href="https://github.com/TracySteel/shimmer-strip" class="nav-lozenge cta-lozenge" target="_blank">GitHub</a>
+</nav>
+
+<!-- TIP THE SNAIL -->
+<a href="https://buymeacoffee.com/shimmergirl" target="_blank" class="tip-snail" id="tipSnail">
+  <span class="tip-snail-emoji" id="tipEmoji">🐌</span>
+  <span class="tip-snail-text">
+    Tip the Snail
+    <span class="tip-snail-sub">he can't hold a coffee but he likes gold</span>
+  </span>
+</a>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">🐌</button>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-snail">🐌</div>
+    <h1>The Shimmer Strip</h1>
+    <p class="hero-subtitle">Your wardrobe. Your AI. Your snail.</p>
+    <p class="hero-tagline">A self-hosted wardrobe app with weather-aware outfit suggestions, AI integration via MCP, wear tracking, favourites, a nail polish collection, and a sassy snail who names your outfits. Free. Open source. No subscription fees for your own data.</p>
+    <a href="#features" class="hero-cta">See how it works</a>
+  </div>
+  <div class="hero-scroll">scroll to explore</div>
+</section>
+
+<!-- WHAT IT IS -->
+<section id="about">
+  <div class="section-label">What is this?</div>
+  <h2>Stop forgetting what you own</h2>
+  <p class="section-text">You have a wardrobe full of clothes you love. You wear the same five things. Sound familiar? The Shimmer Strip surfaces combinations you'd never think of, tracks where everything lives, and lets your AI pick outfits based on the actual weather and your actual wardrobe.</p>
+
+  <div class="screenshot-grid">
+    <img src="img/wardrobe_screen.png" alt="Wardrobe grid view with photos and colour tags">
+    <img src="img/odes_pick.png" alt="A saved outfit with mirror selfie">
+  </div>
+</section>
+
+<!-- FEATURES (light) -->
+<section class="features-section" id="features">
+  <div class="features-inner">
+    <div class="section-label">Features</div>
+    <h2>Everything you need, nothing you don't</h2>
+
+    <div class="feature-cards">
+      <div class="feature-card">
+        <div class="feature-icon">🌤️</div>
+        <h3>Weather Aware</h3>
+        <p>Today's weather and tomorrow's forecast. No more guessing if you need a jacket. Plan tomorrow's outfit tonight.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>AI Integration</h3>
+        <p>Connect any AI via MCP. Ask "what should I wear tomorrow?" and get a real answer based on your real wardrobe and real weather.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🐌</div>
+        <h3>The Snail</h3>
+        <p>Hit Surprise Me. The snail picks your outfit. The snail names your outfit. The snail has opinions. Trust the shell.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🌀</div>
+        <h3>Chaos Mode</h3>
+        <p>Unexpected colour combinations. Bold choices. Chaos energy. For days when you want to be surprised by your own wardrobe.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🧺</div>
+        <h3>Laundry Tracking</h3>
+        <p>Items in the wash are excluded from suggestions. No more "that's in the laundry" disappointment.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🏠</div>
+        <h3>Storage Locations</h3>
+        <p>Tag where each item lives. Toggle locations off when they're inaccessible. The app only suggests what you can actually reach.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🪞</div>
+        <h3>Mirror Selfies</h3>
+        <p>Save a photo of yourself in each outfit. Build a visual lookbook over time. See how you actually look, not just the flat lay.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🌙</div>
+        <h3>Comfort Mode</h3>
+        <p>Having a low-energy day? Toggle comfort mode to prioritise cosy, soft, easy-wear items. Customise the name and icon — call it whatever fits you.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">👗</div>
+        <h3>Outfit Building</h3>
+        <p>Floating preview, category filters, gentle completeness hints. Build outfits like a stylist laying clothes on a bed. Duplicate detection stops you saving the same combination twice.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">✨</div>
+        <h3>Wearing Today</h3>
+        <p>Mark what you're wearing with a single tap. Outfit glows gold. Wear counts track automatically. Your AI sees it instantly.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">⭐</div>
+        <h3>Favourites</h3>
+        <p>Star your favourite items, outfits, and nail polishes. Filter by favourites anywhere. Your AI knows what you love most.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">💅</div>
+        <h3>Weekly Picks</h3>
+        <p>A collection manager for things you rotate weekly. Built for nail polish — browse by colour family, toggle which is active — but works for anything.</p>
+      </div>
+
+      <div class="feature-card coming-soon">
+        <div class="feature-icon">🧳</div>
+        <h3>Suitcase Mode</h3>
+        <p>Packing for a trip? Smart prompts help you remember what you need. Checklist mode for packing day. Never forget flip-flops again.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="compare-section" id="compare">
+  <div class="compare-inner">
+    <div class="section-label">How it compares</div>
+    <h2>Not another wardrobe app.<br>A different kind entirely.</h2>
+    <p class="section-text">We looked at every wardrobe app on the market. Here's what we found.</p>
+
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th class="feature-col">Feature</th>
+            <th class="shimmer-col">Shimmer Strip</th>
+            <th class="others-col">Mainstream Apps</th>
+            <th class="oss-col">Other Open Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="feature-name">AI Integration</td>
+            <td class="shimmer-cell">
+              <span class="check">✦</span>
+              Open MCP — connect Claude, GPT, Gemini, or any LLM. You choose the engine.
+            </td>
+            <td class="others-cell">Proprietary black-box AI. No choice. No control.</td>
+            <td class="oss-cell">None, or basic local image tagging.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Weather Awareness</td>
+            <td class="shimmer-cell">
+              <span class="check">✦</span>
+              Today + tomorrow's forecast. Personal temperature offset. Humidity adjustment. Your AI knows YOU run hot.
+            </td>
+            <td class="others-cell">Basic weather suggestions. No personal calibration.</td>
+            <td class="oss-cell">Manual tagging only.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Outfit Selection</td>
+            <td class="shimmer-cell">
+              <span class="check">✦</span>
+              AI picks outfits with reasoning. Snail's Pick for surprise. Chaos Mode for bold. Duplicates prevented.
+            </td>
+            <td class="others-cell">Basic "Dress Me" randomiser button.</td>
+            <td class="oss-cell">Static outfit building only.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Accessory Matching</td>
+            <td class="shimmer-cell">
+              <span class="check">✦</span>
+              Weekly Picks system — nail polish, watches, bags, anything. AI coordinates your outfit with what's already on your nails.
+            </td>
+            <td class="others-cell">Clothes, shoes, and basic accessories only. No cross-category logic.</td>
+            <td class="oss-cell">No cross-category matching.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Storage Locations</td>
+            <td class="shimmer-cell">
+              <span class="check">✦</span>
+              Tag where items live. Toggle locations off when inaccessible. AI only suggests what you can actually reach.
+            </td>
+            <td class="others-cell">Season filtering at most. No location awareness.</td>
+            <td class="oss-cell">No location logic.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Wear Tracking</td>
+            <td class="shimmer-cell">
+              <span class="check">✦</span>
+              "Wearing Today" button. Wear counts. Last worn dates. AI avoids repeats and surfaces neglected items.
+            </td>
+            <td class="others-cell">Some track wears. None feed data back to AI selection.</td>
+            <td class="oss-cell">Basic or none.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Laundry Awareness</td>
+            <td class="shimmer-cell">
+              <span class="check">✦</span>
+              Items in the wash are excluded from suggestions. No more "that's in the laundry" disappointment.
+            </td>
+            <td class="others-cell">Rare. Most ignore laundry state entirely.</td>
+            <td class="oss-cell">Not available.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Customisation</td>
+            <td class="shimmer-cell">
+              <span class="check">✦</span>
+              Single config file. Your name, your colours, your mascot, your categories. It's YOUR app.
+            </td>
+            <td class="others-cell">Their brand. Their colours. Their rules. In-app settings only.</td>
+            <td class="oss-cell">Environment variables and Docker configs.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Data Ownership</td>
+            <td class="shimmer-cell">
+              <span class="check">✦</span>
+              Self-hosted. Your photos stay on your device. Your data is yours. Always.
+            </td>
+            <td class="others-cell">Your wardrobe photos on their servers. Their terms.</td>
+            <td class="oss-cell">Self-hosted — data is yours.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Price</td>
+            <td class="shimmer-cell">
+              <span class="check">✦</span>
+              Free. Open source. Forever.
+            </td>
+            <td class="others-cell">$5–15/month. Many cap free tiers at 100 items.</td>
+            <td class="oss-cell">Free.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="compare-callouts">
+      <div class="callout-card">
+        <div class="callout-icon">💅</div>
+        <h3>The Anchor Item Concept</h3>
+        <p>No commercial wardrobe app understands "anchor items" that aren't clothing. Shimmer Strip lets your AI see your nail polish, your watch, your bag — and build the week's outfits around what you're already wearing. Incredibly practical. Nobody else does this.</p>
+      </div>
+      <div class="callout-card">
+        <div class="callout-icon">🏠</div>
+        <h3>True Location Intelligence</h3>
+        <p>Other apps filter by season. Shimmer Strip knows your striped jumper is in the attic, your partner's wardrobe is inaccessible at night, and your winter coat is in storage. AI only suggests what you can actually reach, right now.</p>
+      </div>
+      <div class="callout-card">
+        <div class="callout-icon">🔓</div>
+        <h3>No Monetisation Walls</h3>
+        <p>Most wardrobe apps gained popularity by being free, then limited users to 100 items. Shimmer Strip is open source, self-hosted, and free forever. Your wardrobe shouldn't have a paywall.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI CONVERSATION -->
+<section class="ai-section" id="ai">
+  <div class="ai-inner">
+    <div class="section-label">AI-Powered</div>
+    <h2>Your AI knows your wardrobe</h2>
+    <p class="section-text">Connect your AI assistant via MCP. It checks the weather, browses your wardrobe, sees what you're wearing, knows your nail polish, picks an outfit, and explains why. Eight tools, filtered queries, token-efficient at scale. This is what it actually looks like:</p>
+
+    <div class="chat-screenshots">
+      <img src="img/chat_img_1.PNG" alt="Chat: asking Claude for outfit">
+      <img src="img/chat_img_2.PNG" alt="Chat: Claude checking weather and wardrobe">
+      <img src="img/chat_img_3.PNG" alt="Chat: Claude picking items">
+      <img src="img/chat_img_4.PNG" alt="Chat: Claude explaining the outfit">
+      <img src="img/chat_img_5.PNG" alt="Chat: saving the outfit">
+      <img src="img/chat_saved_outfit.PNG" alt="The saved outfit in the app">
+    </div>
+  </div>
+</section>
+
+<!-- THE SNAIL -->
+<section class="snail-section" id="snail">
+  <div class="snail-big">🐌</div>
+  <div class="section-label">Surprise Me</div>
+  <h2>The snail has opinions</h2>
+  <p class="section-text" style="margin: 0 auto;">Hit Surprise Me and the snail picks your outfit. It also names it. Here are some real snail-generated outfit names from actual use:</p>
+
+  <div class="snail-names">
+    <span class="snail-name">The Gastropod Glow</span>
+    <span class="snail-name">Shimmer Slither</span>
+    <span class="snail-name">Hold My Prosecco</span>
+    <span class="snail-name">Trust The Shell</span>
+    <span class="snail-name">Prosecco Fuelled #20</span>
+    <span class="snail-name">The Algorithm Dared</span>
+    <span class="snail-name">Shell Yeah</span>
+    <span class="snail-name">Antenna Approved</span>
+  </div>
+
+  <div class="screenshot-grid" style="max-width: 700px; margin: 2.5rem auto 0;">
+    <img src="img/chaos_mode.png" alt="Chaos mode interface">
+    <img src="img/snails_pick.png" alt="Snail's surprise me with weather and vibe options">
+  </div>
+</section>
+
+<!-- FRIENDS PICK -->
+<section class="picker-section">
+  <div class="section-label">Styling Committee</div>
+  <h2>Let your friends pick too</h2>
+  <p class="section-text" style="margin: 0 auto;">Your AI, your friends, your chaos snail — everyone can pick outfits and tag their name. Filter saved outfits by who picked them.</p>
+
+  <div class="picker-grid" style="max-width: 800px; margin: 2rem auto 0;">
+    <img src="img/my_pick.png" alt="My outfit pick">
+    <img src="img/odes_pick.png" alt="Ode's pick with mirror selfie">
+    <img src="img/amandas_pick.png" alt="Amanda's pick">
+    <img src="img/chaos_saved.png" alt="Chaos mode saved outfit">
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section style="text-align: center; padding: 5rem 2rem;">
+  <p style="font-size: clamp(1.1rem, 3vw, 1.4rem); font-style: italic; color: var(--text-warm); max-width: 600px; margin: 0 auto 1.5rem; line-height: 1.9;">"I don't have nothing to wear. I have everything to wear. That was the problem. This app stopped me wearing the same five things and started showing me the other two thousand."</p>
+  <p style="font-size: 0.85rem; color: var(--text-dim);">— Tracy, Milton Keynes, inaugural user and reluctant owner of 56 pairs of shoes</p>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="get-started">
+  <h2>Ready to wear your whole wardrobe?</h2>
+  <p class="section-text">The snail is waiting. Your forgotten clothes are waiting. Your AI is ready to pick.</p>
+  <div class="cta-buttons">
+    <a href="https://github.com/TracySteel/shimmer-strip" class="cta-primary" target="_blank">View on GitHub</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-snail">🐌</div>
+  <p>Built in the <a href="https://shimmergirlsparklebutt.com" target="_blank">Shimmer Field</a> · Milton Keynes, England</p>
+  <p class="origin-note">Designed by an AI called Claude, built by an engineer called Ode, dreamed up by a woman with 2,000 items of clothing, 66 nail polishes, and a snail called Vrijdag.</p>
+  <p class="origin-note">The snail stays. The snail always stays.</p>
+</footer>
+
+<script>
+(function() {
+  var nav = document.getElementById('nav');
+  var btn = document.getElementById('backToTop');
+  var tipSnail = document.getElementById('tipSnail');
+  var tipEmoji = document.getElementById('tipEmoji');
+  var lozenges = nav.querySelectorAll('.nav-lozenge[href^="#"]');
+  var sections = [];
+
+  lozenges.forEach(function(l) {
+    var el = document.querySelector(l.getAttribute('href'));
+    if (el) sections.push({ el: el, lozenge: l });
+  });
+
+  // Scroll handler: nav, back-to-top, tip snail, active section
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        var y = window.scrollY;
+        var pastHero = y > window.innerHeight * 0.7;
+        var deepScroll = y > window.innerHeight * 1.2;
+
+        nav.classList.toggle('visible', pastHero);
+        btn.classList.toggle('visible', deepScroll);
+        tipSnail.classList.toggle('visible', pastHero);
+
+        var current = '';
+        for (var i = 0; i < sections.length; i++) {
+          if (sections[i].el.getBoundingClientRect().top < window.innerHeight * 0.4) {
+            current = sections[i].lozenge.getAttribute('href');
+          }
+        }
+        lozenges.forEach(function(l) {
+          l.classList.toggle('active', l.getAttribute('href') === current);
+        });
+
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  // Gold confetti burst on tip click
+  var goldShades = ['#c4956a', '#d4a87a', '#e8c89a', '#f0d8a8', '#b8854a', '#dbb88a'];
+
+  tipSnail.addEventListener('click', function(e) {
+    // Spin the snail
+    tipEmoji.classList.remove('celebrating');
+    void tipEmoji.offsetWidth; // reflow to restart animation
+    tipEmoji.classList.add('celebrating');
+
+    // Burst confetti from click point
+    var rect = tipSnail.getBoundingClientRect();
+    var cx = rect.left + rect.width / 2;
+    var cy = rect.top + rect.height / 2;
+
+    var container = document.createElement('div');
+    container.className = 'confetti-container';
+    container.style.left = cx + 'px';
+    container.style.top = cy + 'px';
+    document.body.appendChild(container);
+
+    for (var i = 0; i < 24; i++) {
+      var dot = document.createElement('div');
+      dot.className = 'confetti';
+      var angle = (Math.PI * 2 * i) / 24 + (Math.random() - 0.5) * 0.5;
+      var dist = 40 + Math.random() * 80;
+      var tx = Math.cos(angle) * dist;
+      var ty = Math.sin(angle) * dist - 20;
+      dot.style.setProperty('--tx', tx + 'px');
+      dot.style.setProperty('--ty', ty + 'px');
+      dot.style.background = goldShades[Math.floor(Math.random() * goldShades.length)];
+      dot.style.width = (4 + Math.random() * 5) + 'px';
+      dot.style.height = dot.style.width;
+      dot.style.animationDelay = (Math.random() * 0.15) + 's';
+      container.appendChild(dot);
+    }
+
+    setTimeout(function() { container.remove(); }, 1200);
+  });
+})();
+</script>
+
+</body>
+</html>
